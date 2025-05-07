@@ -1,0 +1,37 @@
+version: '3,8'
+
+services:
+  client:
+    bluid: ./client
+    port:
+      - "4173:4173"
+      - "5173":"5173"
+    volumes:
+      - ./client:/app
+      #pour le repertoire nodejs
+    enviroment:
+      - VUE_APP_API_URL=http://server:800/api
+  server:
+    bluid: ./server
+    ports:
+      - "8000":"8000"
+    volumes:
+      - ./server/app
+    enviroment:
+      -DJANGO_SETTINGS_MODULE=monbackend.settings
+  monitoring:
+    bluid: ./monitoring
+    ports:
+      - "3000":"3000"
+
+  nginx:
+    bluid: ./nginx
+    ports:
+      - "80":"80"
+      - "443":"443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - client
+      - server
+      - monitoring
