@@ -3,6 +3,7 @@ version: '3,8'
 services:
   client:
     bluid: ./client
+    container_name: appclient
     port:
       - "4173:4173"
       - "5173":"5173"
@@ -21,11 +22,13 @@ services:
       -DJANGO_SETTINGS_MODULE=monbackend.settings
   monitoring:
     bluid: ./monitoring
+    container_name: app_monitoring
     ports:
       - "3000":"3000"
 
   nginx:
     bluid: ./nginx
+    container_name: app_nginx
     ports:
       - "80":"80"
       - "443":"443"
